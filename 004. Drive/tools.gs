@@ -40,6 +40,7 @@ function listFiles(){
     var file = files.next();
     Logger.log(file.getName());
   }
+  return files; //return the collection of files
 }
 
 //Delete every untitled spreadsheet that hasn't been updated in a week.
