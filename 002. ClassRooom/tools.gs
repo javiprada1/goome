@@ -17,3 +17,19 @@ function  listcourses() {
   }
 }
 
+// Void method 
+// Accept all invitation on your logged google account 
+
+function AcceptAllInvitation() {
+  inviCourse=Classroom.Invitations.list() // Take a array of id invitation
+ 
+    if (inviCourse.length > 0) {
+    for (i = 0; i < inviCourse; i++) {
+      Classroom.Invitations.accept(inviCourse[i]) //Accept invitations of course ID
+    } 
+    }else {
+      return 'No Invitations'; // No invitation detected
+    }
+
+}
+
