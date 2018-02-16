@@ -2,6 +2,7 @@
 Create new Form with name 
 
   Parameter name: The name of form. Type String: 'Prueba2'
+  Return the form as an object so that it can be used in other functions 
    
 */
 function newForm(name){
@@ -24,6 +25,7 @@ Create a multiple choice question in form
                     var answers=[];
                     answers[0]="pera";
                     answers[1]="fresa";
+  Return the question as an object so that it can be used in other functions 
                     
 */
 function newMultipleChoice(form,question,answers){
@@ -32,6 +34,7 @@ function newMultipleChoice(form,question,answers){
   .setChoiceValues(answers)
   .setRequired(true);
   return quest;
+  
 }
 
 
@@ -44,6 +47,7 @@ Create a date question in form
   Parameter question: The question we want to add
   Example question --> var question= "What is your birthdate?";
 
+  Return the question as an object so that it can be used in other functions 
 */
 function newDateQuestion(form,question){
  var item = form.addDateItem();
@@ -62,7 +66,6 @@ Create a page break in form
 */
 function pageBreak(form){
   form.addPageBreakItem();
-  
 }
 
   
@@ -81,6 +84,7 @@ Create a checkbox question in form
                     answers[0]="pera";
                     answers[1]="fresa";
                     
+  Return the question as an object so that it can be used in other functions 
 */
   function checboxQuestion(form,question,answers){
     var item = form.addCheckboxItem();
@@ -92,7 +96,7 @@ Create a checkbox question in form
 
 
 /*
-Create a new text question
+Create a new short answer question
 
   Parameter form: The form where we are going to insert the question
   Example --> var existingForm = FormApp.openById('1234567890abcdefghijklmnopqrstuvwxyz');
@@ -100,11 +104,33 @@ Create a new text question
   Parameter question: The question we want to add
   Example question --> var question= "What is your favorite fruit?";
   
+ Return the question as an object so that it can be used in other functions 
+  
 */
-function textQuestion(form,question){
+function shortTextQuestion(form,question){
    var textItem=form.addTextItem().setTitle(question);
   return textItem;
 }
+
+
+/*
+Create a new long answer question
+
+  Parameter form: The form where we are going to insert the question
+  Example --> var existingForm = FormApp.openById('1234567890abcdefghijklmnopqrstuvwxyz');
+
+  Parameter question: The question we want to add
+  Example question --> var question= "What is your favorite fruit?";
+  
+  Return the question as an object so that it can be used in other functions 
+  
+*/
+function longTextQuestion(form,question){
+ var item = form.addParagraphTextItem();
+ item.setTitle(question);
+  return item;
+}
+
 
 
 /*
