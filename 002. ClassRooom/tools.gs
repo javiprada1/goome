@@ -33,3 +33,17 @@ function AcceptAllInvitation() {
 
 }
 
+
+
+//Take a array of id course
+//Accept invitation ID on your logged google account 
+function AcceptSpecificInvitation(idcourse) { // ID course array
+    if (idcourse.length > 0) {
+      for (i = 0; i < idcourse; i++) {
+      Classroom.Invitations.accept(idcourse[i]) //Accept invitations of course ID
+    } 
+    } else {
+      return 'No Invitations';
+    }
+
+}
