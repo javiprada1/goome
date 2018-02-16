@@ -1,6 +1,4 @@
-# ![](https://i.imgur.com/gnPvjKv.png)
+# ![http://goome.es](https://i.imgur.com/gnPvjKv.png)
 
-Todos los desarrollos de la iniciativa Goome (Nuevas Profesiones, Sevilla)
- Proyecto Apps Script - Google Developers
-
+Global Community of Independent GAS Designers and Developers
 
