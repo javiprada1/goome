@@ -1,7 +1,9 @@
+
 function onOpen() {
   DocumentApp.getUi() // Or DocumentApp or FormApp.
       .createMenu('Acciones Extra')
       .addItem('Traducir texto', 'translateSelection')
+      .addItem('Hacer calendario mes actual', 'createCal')
   
       .addToUi();
 }
@@ -43,5 +45,37 @@ function translateSelection() {
       
     }
   }
+}
+
+function createCal() {
+  var doc = DocumentApp.create("Calendar"),
+      body = doc.getBody(),
+      cells = [
+        ['','','','','','',''],
+        ['','','','','','',''],
+        ['','','','','','',''],
+        ['','','','','','',''],
+        ['','','','','','',''],
+        ['','','','','','','']
+        ],
+      now = new Date(),
+      date = new Date(now.getFullYear(), now.getMonth(), 1),
+      cur_month = now.getMonth(),
+      row = 0,
+      col = date.getDay();
+
+  while (cur_month == date.getMonth()) {
+    cells[row][col] = date.getDate();
+
+    col += 1;
+    if (col > 6) {
+      col = 0;
+      row += 1;
+    }
+
+    date = new Date(date.getTime() + 1000*60*60*24);
+  }
+  body.setText('Calendar Name');
+  body.appendTable(cells);
 }
 
