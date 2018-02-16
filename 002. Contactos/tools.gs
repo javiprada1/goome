@@ -1,4 +1,7 @@
-//It changes the name of the contact
+/*
+  It changes the name of the contact
+  name1<--
+*/
 function crearContacto(name1,name2) { 
   var contacts = ContactsApp.getContactsByName(name1);
   for (var i in contacts) {
