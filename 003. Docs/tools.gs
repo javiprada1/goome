@@ -11,21 +11,21 @@ function onOpen() {
 
 
 function translateSelection() {
-  
+  //Select the active document
   var selection = DocumentApp.getActiveDocument().getSelection();
-  
+  //
   if (!selection) {
     DocumentApp.getUi().alert("Please select text for translation.");
     return;
   }
-  
+  //take the selected text from the doc
   var elements = selection.getSelectedElements();
   
-  /* Append the translated text with the original */
+  // Append the translated text with the original 
   for (var i = 0; i < elements.length; i++) {
     
-    if (elements[i].isPartial()) { /* Is partial text selected */
-      
+    if (elements[i].isPartial()) { // Is partial text selected 
+      //take the selected as a text from start to end
       var element = elements[i].getElement().asText();
       var startIndex = elements[i].getStartOffset();
       var endIndex = elements[i].getEndOffsetInclusive();
@@ -38,7 +38,7 @@ function translateSelection() {
       
       var element = elements[i].getElement();
       
-      if (element.editAsText) { /* Is the selection contains text */
+      if (element.editAsText) { // Is the selection contains text
         var text = element.asText().getText();
         var translatedText = LanguageApp.translate(text, 'es', 'en'); 
         element.asText().setText("\n"+translatedText);
@@ -49,6 +49,7 @@ function translateSelection() {
 }
 
 function createCal() {
+  //first of all create the structure a
   var doc = DocumentApp.create("Calendar"),
       body = doc.getBody(),
       cells = [
@@ -59,12 +60,13 @@ function createCal() {
         ['','','','','','',''],
         ['','','','','','','']
         ],
+      //Now it saves the dates of the actual calendar
       now = new Date(),
       date = new Date(now.getFullYear(), now.getMonth(), 1),
       cur_month = now.getMonth(),
       row = 0,
       col = date.getDay();
-
+  //it goes 1 by 1 and fills the structure
   while (cur_month == date.getMonth()) {
     cells[row][col] = date.getDate();
 
@@ -76,19 +78,10 @@ function createCal() {
 
     date = new Date(date.getTime() + 1000*60*60*24);
   }
-  body.setText('Calendar Name');
+  body.setText('Calendar');
   body.appendTable(cells);
 }
 
-
-// Use this code for Google Docs, Forms, or new Sheets.
-function onOpen() {
-  SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
-      .createMenu('Acciones Extra')
-      .addItem('Crear Documento apartir de este Excel', 'createDocumentExcel')
-      .addToUi();
- Logger.log("se ha abierto excel");
-}
 
 function createDocumentExcel() {
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
