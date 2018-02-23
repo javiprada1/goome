@@ -4,6 +4,7 @@ function onOpen() {
       .createMenu('Acciones Extra')
       .addItem('Traducir texto', 'translateSelection')
       .addItem('Hacer calendario mes actual', 'createCal')
+      .addItem('Crear Documento apartir de este Excel', 'createDocumentExcel')
   
       .addToUi();
 }
@@ -77,5 +78,37 @@ function createCal() {
   }
   body.setText('Calendar Name');
   body.appendTable(cells);
+}
+
+
+// Use this code for Google Docs, Forms, or new Sheets.
+function onOpen() {
+  SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
+      .createMenu('Acciones Extra')
+      .addItem('Crear Documento apartir de este Excel', 'createDocumentExcel')
+      .addToUi();
+ Logger.log("se ha abierto excel");
+}
+
+function createDocumentExcel() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = spreadsheet.getActiveSheet();
+//select the range of cells that you want to use.
+  var titulo = sheet.getRange(2,3).getValue();
+  var cuerpo = sheet.getRange(3,3).getValue();
+  //create new document with the tittle selected.
+  var doc = DocumentApp.create(titulo);
+  var body = doc.getBody();
+  
+  body.appendParagraph(cuerpo);
+  body.appendPageBreak();
+  //save the document and close
+  doc.saveAndClose();
+  //get the url of the new doc
+  var urlNuevo = doc.getUrl();
+  
+  var ui =   SpreadsheetApp.getUi();
+  ui.alert("Documento creado con éxito. URL: "+urlNuevo);
+
 }
 
