@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <div>
+      <h3>Simple Autocrat</h3>
+    </div>
+    <div>
+      <label for="urlTemplate">Template URL</label>
+      <input type="url" id="urlTemplate" onchange="deactivateExecute()"/><br>
+    </div>
+    <div>
+      <label for="urlFolder">Destination folder URL</label>
+      <input type="url" id="urlFolder" onchange="deactivateExecute()"/><br>
+    </div>
+    <div>
+      <input type="checkbox" id="multipleFiles" name="multipleFiles" onclick="checkMultiple()"/>
+      <label for="multipleFiles">Create multiple document</label><br>
+    </div>
+    <div>
+      <input type="checkbox" id="editableDocuments" />
+      <label for="editableDocuments">Create Google documents</label><br>
+    </div>
+    <div>
+      <input type="checkbox" id="pdfDocuments" />
+      <label for="pdfDocuments">Create pdf documents</label><br>
+    </div>
+    <div>
+      <input type="checkbox" id="sendPdf" disabled/>
+      <label for="sendPdf">Send by e-mail</label><br>
+    </div>
+    <div>
+      <input type="button" value="Check"
+        onclick="google.script.run.withSuccessHandler(activateExecute).checkUrls(urlTemplate.value, urlFolder.value)" />
+      <input type="button" value="Execute" id="executeButton"
+        onclick="deactivateExecute();
+          google.script.run.simpleAutocrat(urlTemplate.value, urlFolder.value, multipleFiles.checked, editableDocuments.checked, pdfDocuments.checked, sendPdf.checked)" 
+        disabled/>
+      <input type="button" value="Cancel"
+        onclick="google.script.host.close()" />
+    </div>
+    <?!= include("JavaScript")?>
+  </body>
+</html>
+

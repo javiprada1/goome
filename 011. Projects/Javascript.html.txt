@@ -1,0 +1,34 @@
+<!-- JavaScript.html -->
+<script>
+    /**
+     * Checks the value of multiple documents/file option is selected.
+     * If so, enables send-by-mail option. If don't, disables tha option.
+     */    
+    function checkMultiple() {
+        var multiple = document.getElementById("multipleFiles").checked;
+        var send = document.getElementById("sendPdf");
+        if (multiple) {
+            send.disabled = false;
+        } else if (!multiple) {
+            send.checked = false;
+            send.disabled = true;
+        }
+    }
+    
+    /**
+     * Enables Execute button.
+     */   
+    function activateExecute(){
+        var button = document.getElementById("executeButton")
+        button.disabled = false;
+    }
+
+    /**
+     * Disables Execute button.
+     */  
+    function deactivateExecute(){
+        var button = document.getElementById("executeButton")
+        button.disabled = true;
+    }
+    
+</script>
