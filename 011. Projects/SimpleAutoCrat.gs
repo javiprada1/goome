@@ -19,8 +19,8 @@
 function onOpen() {
   var ui = SpreadsheetApp.getUi(); // Or DocumentApp or FormApp.
   // Creates the menu with a submenu.
-  ui.createMenu('Autocrat simple')
-      .addItem('Empezar ahora!!', 'openDialog')
+  ui.createMenu('Simple Autocrat')
+      .addItem('Start now!!', 'openDialog')
       .addToUi();
 }
 
