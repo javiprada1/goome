@@ -10,4 +10,4 @@
 
 ## Installation
 
-> To install and use this code, please read the comment inside.
+> To install and use this code, please read the Readme.md inside.
