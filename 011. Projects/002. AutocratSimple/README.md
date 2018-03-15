@@ -9,6 +9,8 @@ This simple and small utility lacks many of its advanced features, but lets you 
 ## Installation
 
 You have to use this utility inside a Google spreadsheet. You can copy all the files of the project inside the Script Editor of a Google spreadsheet, as a new project.
+You can view a sample spreadsheet with the script, ready to use, [here](https://goo.gl/U4MXeR)
+
 The five first columns in the spreadsheet must be these (by order): 'email', 'message', 'subject', 'file name', 'created' (creation data and time of merged file), and 'file sent'.
 The tags in the template document must be inside double greater-than and lesser-than symbols '<<' '>>'. The tags in the sheet must not have theese symbols.
 Be careful! Tags have to be identical.
