@@ -2,15 +2,12 @@
 
 ## Closed project
 
-This project has been closed because Google Maps, through My Maps' utility, already imports a list of places/positions in a spreadsheet. We can give a few advices to a correct geocoding of the addresses in the spreadsheet (INCOMPLETED TRANSLATION):
+This project has been closed because Google Maps, through My Maps' utility, already imports a list of places/positions in a spreadsheet. Here are some tips to a correct geocoding of the addresses in the spreadsheet:
 <ul>
-<li> Google en general reconoce las calles aunque no se ponga el tipo de calle (calle, avenida, plaza, etc.)
-<li> Google reconoce la sintasix Calle cruce Calle. Aunque la muestra como Calle & Calle, sitúa correctamente el punto en la intersección de las calles.
-<li> Obviamente, hay que intentar evitar las referencias que no son localizaciones geográficas, como por ejemplo 'Salida parroquia', 'Saliendo de la Encarnación cruce Laraña', 'Inicio Campana tras vuelta', 'Palquillo', etc.
-<li> También da error si se da un cruce de calles que en realidad no se cruzan (según Google Maps). Hay algunos entronques/derivaciones extraños donde Google no tiene claro el nombre de la calle (o al menos no coincide con los nombres indicados en la hoja de cálculo).
-<li> Situando el mapa en el contexto adecuado (Sevilla), o limitando el objeto Geocoder, no parece que haya que añadir ', Sevilla' a las direcciones, aunque esto puede variar según la aplicación que estemos utilizando (Google Maps, My Maps, Fusion Tables, etc.).
+<li> Google Maps usually recognizes addresses even without street type (av, st, sq, ...).</li>
+<li> To find the intersection between two roads, insert an ampersand ("&") between the two street names. In Spanish you can get the same result inserting "cruce" between road names.</li>
+<li> If the two previous roads does not intersect, we will get an error.</li>
+<li> Obviously you must avoid unclear references or those ones that are not geographical locations.</li>
+<li> It is not needed to add town, country, zip, ... if you make zoom in the map or limit geocoder object, although it depends on the app you use (Google Maps, My Maps, Fusion Tables, ..).</li>
 </ul>
 
-## Installation
-
-> To install and use GPS Cofrade...
