@@ -1,12 +1,13 @@
-# All Projects
+# Revoke and change permissions to different folders and files recursively
 
 ## Introduction
 
-> In this folde we will create all the projects and gs files.
+> In this project we are taking advantages of GAS Apis related to G Drive. One of the many good things this project has is the purpose to gain time,letting with a simple click changue permissions in an especified folder recursively.
+More deeply into the code, it lets changue all the permissions from Edit mode to Viewer mode only in the folder,subfolders and files where whose users are being shared with, previously especified by the URL of the folder.
 
 ## Code Samples
 
-> All ours project are comment and progammed with Coding Standard to facilite the compression and reading.
+> The whole project is coded with GAS(Google App Script), using an easy language and very intuitional code.
 
 ## Installation
 
