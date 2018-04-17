@@ -49,8 +49,6 @@ function AcceptSpecificInvitation(idcourse) { // ID course array
 }
 
 
-
-
 /*
 Create a new Announcement with an URL in Google Classroom
   Parameter: The course ID and URL you want notificate
