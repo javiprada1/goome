@@ -44,7 +44,7 @@ function openDialog() {
 }
 
 /**
- * Includes in the html interface a file with Javascript client code.
+ * Checks the URL of the template file and the URL of the folder and reports user if they are valid or not.
  * @param {string} templateUrl - The URL of the template file (a Google document with tags).
  * @param {string} folderUrl - The URL of the folder. In fact only needs the Id folder (get it from the URL).
  */
