@@ -20,17 +20,16 @@ function onOpen() {
 
 function disablePermissions() {
   var ui = SpreadsheetApp.getUi();
+  
   var messageURL = ui.prompt(
     'Introduce the url of the folder you want to disable de access: ',
     ui.ButtonSet.OK_CANCEL);
   
- 
+  
   var buttonURL = messageURL.getSelectedButton();
   var url = messageURL.getResponseText();
   var urlID = url.match(/[-\w]{25,}/);
-  var folder = DriveApp.getFolderById(urlID);
-  
-  
+  var folderRoot = DriveApp.getFolderById(urlID);
   
   /*
   This code remove the editors privileges and set all to viewer/read privilege only, for each folder and file inside our request main folder in a recursive way.
@@ -39,63 +38,136 @@ function disablePermissions() {
   
   if(buttonURL == ui.Button.OK){
     
-    // Removing Editor and Viewer Permissions @ folder selected and subfolders //
+    //Remove permission to files first
+    var childFilessRoot = folderRoot.getFiles();
+    while(childFilessRoot.hasNext()){
+      var file = childFilessRoot.next();
+      disablePermissionsFile(file);
+    }
     
-    var childFolders = folder.getFolders();
-    while(childFolders.hasNext()){
-      var childFolder = childFolders.next();
-      var users = folder.getEditors();
-      for(var i = 0; i < users.length;i++){
-          email = users[i].getEmail();
-          if(email != ""){
-            folder.removeEditor(email);            
-          }else{
-            Browser.msgBox("Error trying to remove editor privilege to the folder: "+folder.getName());
-          }
+    // Removing Editor Permissions and setting as a Viewer/Read permission only @ folders //
+    
+    var childFoldersRoot = folderRoot.getFolders();
+    
+    while(childFoldersRoot.hasNext()){
+      // Globals var
+      var childFolder = childFoldersRoot.next();
+      Logger.log("Entro en:"+childFolder.getName());
       
-        }
-       var users = folder.getViewers();
-      for(var i = 0; i < users.length ; i++){
-          email = users[i].getEmail();
-          if(email != ""){
-            folder.removeViewer(email);            
-          }else{
-            Browser.msgBox("Error trying to remove viewer privilege to the folder: "+folder.getName());
-          }          
-        }
+      //Now, delete permission to ChildFolder
+      var resfolder = disablePermissionsFolder(childFolder);
       
-      
-      // Removing Editor and Viewer Permissions @ Files //
-      
-      var files = folder.getFiles();
+      // Remove all permision to files
+      var files = childFolder.getFiles();
       while(files.hasNext()){
         var file = files.next();
-        var fileUsers = file.getEditors();
-        for(var i = 0; i < fileUsers.length;i++){
-            email = fileUsers[i].getEmail();
-            if(email != ""){
-              file.removeEditor(email);
-            }else{
-              Browser.msgBox("Error trying to remove editor privilege to the file: "+file.getName());
-            }
-        }
-        
-        var fileUsers = file.getViewers();
-        for(var i = 0; i < fileUsers.length;i++){
-            email = fileUsers[i].getEmail();
-            if(email != ""){
-              file.removeViewer(email);
-            }else{
-              Browser.msgBox("Error trying to remove viewer privilege to the file: "+file.getName());
-            }
-        }
-  
+        var res = disablePermissionsFile(file);
+        Logger.log("Quito permiso de: "+file.getName());
       }
-     
+      
+      //If this childFolder contains Subfolders or subfiles before delete permisions
+      var subchildfolders = childFolder.getFolders();
+      
+      if(subchildfolders.hasNext()){
+        Logger.log("Tiene hijos"); 
+      }else{
+        Logger.log("No tiene hijos");
+      }
+      
+      //Iterate all subfolder and subfiles
+      while(subchildfolders.hasNext()){
+        //SubFolder var
+        var subchildFolder = subchildfolders.next();
+        var resSubFolder = iterateFolder(subchildFolder);
+      }
     }
-     
+    
     ui.alert('Disable access was successfuly');
+    
+    
   }else{
     ui.alert('Error, there was a problem disabling acess');
+  }
+  
+}
+
+/*
+Function aux to disable all permissions recursively to a folder
+*/
+function disablePermissionsFolder(folder){
+  var ret = false;
+  var users = folder.getViewers();
+  for(var i = 0; i < users.length ; i++){
+    var email = users[i].getEmail();
+    if(email != ""){
+      Logger.log("Entro y elimino carpeta (Visor): "+folder.getName());
+      folder.removeViewer(email);    
+      ret = true;
+    }       
+  }
+  
+  var users = folder.getEditors();
+  for(var i = 0; i < users.length;i++){
+    var email = users[i].getEmail();
+    if(email != ""){
+      Logger.log("Entro y elimino carpeta (Editor): "+folder.getName());
+      folder.removeEditor(email);
+      ret = true;
+    }
+  }
+  
+  return ret;
+  
+}
+/*
+Function aux to disable all permissions recursively to a file
+*/
+function disablePermissionsFile(file){
+  var ret = false;
+  var fileUsers = file.getViewers();
+  for(var i = 0; i < fileUsers.length;i++){
+    Logger.log("Entro y elimino archivo (Visor): "+file.getName());
+    var email = fileUsers[i].getEmail();
+    if(email != ""){
+      file.removeViewer(email);
+      ret = true;
+    }
+  }
+  
+  var fileUsers = file.getEditors();
+  for(var i = 0; i < fileUsers.length;i++){
+    var email = fileUsers[i].getEmail();
+    if(email != ""){
+      Logger.log("Entro y elimino archivo (Editor): "+file.getName());
+      file.removeEditor(email);
+      ret = true;
+    }
+  }
+  
+  return ret;
+}
+
+/*
+Function to iterate recusively a folder
+*/
+
+function iterateFolder(subchildFolder){
+  
+  Logger.log("Entro en: "+subchildFolder.getName());
+  // Delete permission files
+  var subfiles = subchildFolder.getFiles();
+  while(subfiles.hasNext()){
+    var subsubfiles = subfiles.next();
+    Logger.log("Quito permiso a Sub archivo: "+subsubfiles.getName());
+    disablePermissionsFile(subsubfiles);
+  }
+  
+  // Delete permission folder
+  var subfolder = subchildFolder.getFolders();
+  while(subfolder.hasNext()){
+    var subsubfolder = subfolder.next();
+    disablePermissionsFolder(subsubfolder);
+    Logger.log("Quito permiso a Sub carpeta: "+subsubfolder.getName());
+    iterateFolder(subsubfolder);
   }
 }
