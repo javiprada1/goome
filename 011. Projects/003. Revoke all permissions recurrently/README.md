@@ -11,4 +11,5 @@ More deeply into the code, it lets changue all the permissions from Edit mode to
 
 ## Installation
 
-> To install and use this code, please click here https://docs.google.com/spreadsheets/d/1sCCTkl2z4Qcr4ps4niqLEKFLggCC55C1k5Zn5X9dbnA/edit#gid=0
+> To install and use this code, please click here 
+https://docs.google.com/spreadsheets/d/11TIGGri5zj93_KgkDG6vrQo28jjWcq7GRl4ImiFrwKo/copy
