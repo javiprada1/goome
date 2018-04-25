@@ -45,7 +45,7 @@ function disablePermissions() {
       disablePermissionsFile(file);
     }
     
-    // Removing Editor Permissions and setting as a Viewer/Read permission only @ folders //
+    // Get all the subfolders @ folder especified by url, removing their permissions
     
     var childFoldersRoot = folderRoot.getFolders();
     
@@ -54,10 +54,10 @@ function disablePermissions() {
       var childFolder = childFoldersRoot.next();
       Logger.log("Entro en:"+childFolder.getName());
       
-      //Now, delete permission to ChildFolder
+      //Delete permission to ChildFolder
       var resfolder = disablePermissionsFolder(childFolder);
       
-      // Remove all permision to files
+      // Remove all permissions @ files
       var files = childFolder.getFiles();
       while(files.hasNext()){
         var file = files.next();
@@ -65,7 +65,7 @@ function disablePermissions() {
         Logger.log("Quito permiso de: "+file.getName());
       }
       
-      //If this childFolder contains Subfolders or subfiles before delete permisions
+      //Check if this childFolder contains subfolders or subfiles before delete  any permissions
       var subchildfolders = childFolder.getFolders();
       
       if(subchildfolders.hasNext()){
@@ -74,7 +74,7 @@ function disablePermissions() {
         Logger.log("No tiene hijos");
       }
       
-      //Iterate all subfolder and subfiles
+      //Iterate between all the subfolders and subfiles
       while(subchildfolders.hasNext()){
         //SubFolder var
         var subchildFolder = subchildfolders.next();
@@ -92,7 +92,7 @@ function disablePermissions() {
 }
 
 /*
-Function aux to disable all permissions recursively to a folder
+Function aux to disable all the permissions recursively to a folder
 */
 function disablePermissionsFolder(folder){
   var ret = false;
@@ -120,7 +120,7 @@ function disablePermissionsFolder(folder){
   
 }
 /*
-Function aux to disable all permissions recursively to a file
+Function aux to disable all the permissions recursively to a file
 */
 function disablePermissionsFile(file){
   var ret = false;
@@ -148,13 +148,13 @@ function disablePermissionsFile(file){
 }
 
 /*
-Function to iterate recusively a folder
+Function which iterate between folders
 */
 
 function iterateFolder(subchildFolder){
   
   Logger.log("Entro en: "+subchildFolder.getName());
-  // Delete permission files
+  // Delete permission @ files
   var subfiles = subchildFolder.getFiles();
   while(subfiles.hasNext()){
     var subsubfiles = subfiles.next();
@@ -162,7 +162,7 @@ function iterateFolder(subchildFolder){
     disablePermissionsFile(subsubfiles);
   }
   
-  // Delete permission folder
+  // Delete permissions @ folder
   var subfolder = subchildFolder.getFolders();
   while(subfolder.hasNext()){
     var subsubfolder = subfolder.next();
