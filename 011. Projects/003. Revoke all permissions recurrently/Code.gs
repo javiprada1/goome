@@ -29,49 +29,69 @@ function disablePermissions() {
   var url = messageURL.getResponseText();
   var urlID = url.match(/[-\w]{25,}/);
   var folder = DriveApp.getFolderById(urlID);
-  var viewers = folder.getViewers();
-  var editors = folder.getEditors();
+  
+  
   
   /*
-  This code remove the editors privileges and set all of them to viewer only for each subfolder and file inside our main folder requested in a recursive way.
-  All the users with whom folders and files has been shared change privileges from edit to view mode.
+  This code remove the editors privileges and set all to viewer/read privilege only, for each folder and file inside our request main folder in a recursive way.
+  All the users with whom folders and files has been shared change privileges from edit to read mode.
   */
   
   if(buttonURL == ui.Button.OK){
     
-    // Removing Editor Permissions and leaving them as a Viewer only @ folders //
+    // Removing Editor and Viewer Permissions @ folder selected and subfolders //
     
     var childFolders = folder.getFolders();
     while(childFolders.hasNext()){
       var childFolder = childFolders.next();
-      for(var i = 0; i < editors.length;i++){
-          email = editors[i].getEmail();
+      var users = folder.getEditors();
+      for(var i = 0; i < users.length;i++){
+          email = users[i].getEmail();
           if(email != ""){
-            folder.removeEditor(email);
-            //Utilities.sleep(1000); // Option used in case it couldn't be possible to remove an editor and add a viewer, so it has to be a "break" for G drive to remove one permission and add another to the same user.
-            folder.addViewer(email);
+            folder.removeEditor(email);            
           }else{
             Browser.msgBox("Error trying to remove editor privilege to the folder: "+folder.getName());
+          }
+      
+        }
+       var users = folder.getViewers();
+      for(var i = 0; i < users.length ; i++){
+          email = users[i].getEmail();
+          if(email != ""){
+            folder.removeViewer(email);            
+          }else{
+            Browser.msgBox("Error trying to remove viewer privilege to the folder: "+folder.getName());
           }          
         }
       
-      // Removing Editor Permissions and leaving as a Viewer only @ Files //
+      
+      // Removing Editor and Viewer Permissions @ Files //
       
       var files = folder.getFiles();
       while(files.hasNext()){
         var file = files.next();
-        var fileEditors = file.getEditors();
-        for(var i = 0; i < fileEditors.length;i++){
-            email = fileEditors[i].getEmail();
+        var fileUsers = file.getEditors();
+        for(var i = 0; i < fileUsers.length;i++){
+            email = fileUsers[i].getEmail();
             if(email != ""){
               file.removeEditor(email);
-              //Utilities.sleep(1000); // Option used in case it couldn't be possible to remove an editor and add a viewer, so it has to be a "break" for G drive to remove one permission and add another to the same user.
-              file.addViewer(email);
             }else{
               Browser.msgBox("Error trying to remove editor privilege to the file: "+file.getName());
             }
         }
+        
+        var fileUsers = file.getViewers();
+        for(var i = 0; i < fileUsers.length;i++){
+            email = fileUsers[i].getEmail();
+            if(email != ""){
+              file.removeViewer(email);
+            }else{
+              Browser.msgBox("Error trying to remove viewer privilege to the file: "+file.getName());
+            }
+        }
+  
       }
+     
     }
      
     ui.alert('Disable access was successfuly');
